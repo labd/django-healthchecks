@@ -17,9 +17,13 @@ Usage
 
 Add the following to your urls.py:
 
+.. code-block:: python
+
     url(r'^healthchecks/', include('django_healthchecks.urls')),
 
 Add a setting with the available healthchecks:
+
+.. code-block:: python
 
     HEALTH_CHECKS = {
         'postgresql': 'django_healthchecks.contrib.check_database',
