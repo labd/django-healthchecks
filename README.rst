@@ -5,9 +5,8 @@ Status
 .. image:: https://travis-ci.org/mvantellingen/django-healthchecks.svg?branch=master
     :target: https://travis-ci.org/mvantellingen/django-healthchecks
 
-.. image:: https://coveralls.io/repos/mvantellingen/django-healthchecks/badge.svg
-    :alt: Coverage
-    :target: https://coveralls.io/r/mvantellingen/django-healthchecks
+.. image:: http://codecov.io/github/mvantellingen/django-healthchecks/coverage.svg?branch=master 
+    :target: http://codecov.io/github/mvantellingen/django-healthchecks?branch=master
     
 .. image:: https://pypip.in/version/django_healthchecks/badge.svg
     :target: https://pypi.python.org/pypi/django_healthchecks/
