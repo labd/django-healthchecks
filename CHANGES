@@ -1,0 +1,7 @@
+0.1.1
+=====
+ - Use status code 200 instead of 500 for failing checks
+
+0.1.0
+=====
+ - Initial release
