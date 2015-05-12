@@ -19,4 +19,4 @@ class HealthCheckServiceView(View):
 
         if result:
             return HttpResponse('true')
-        return HttpResponse('false', status=500)
+        return HttpResponse('false')
