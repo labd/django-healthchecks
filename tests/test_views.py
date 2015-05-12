@@ -45,8 +45,7 @@ def test_service_view_err(rf, settings):
     view = views.HealthCheckServiceView()
 
     result = view.dispatch(request, service='database')
-
-    assert result.status_code == 500
+    assert result.status_code == 200
     assert result.content == 'false'
 
 
