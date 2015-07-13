@@ -17,6 +17,7 @@ class HealthCheckServiceView(View):
         if result is None:
             raise Http404()
 
-        if result:
-            return HttpResponse('true')
-        return HttpResponse('false')
+        if result in (True, False):
+            return HttpResponse(str(result).lower())
+
+        return HttpResponse(result)
