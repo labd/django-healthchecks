@@ -1,3 +1,7 @@
+0.2.0 
+=====
+ - Set proper caching headers (no-cache, no-store, max-age=0)
+
 0.1.2
 =====
  - Return raw status value instead of forcing it to a boolean on the 
