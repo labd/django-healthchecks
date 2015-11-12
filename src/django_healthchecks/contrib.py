@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db import connection
 
 
@@ -7,6 +8,18 @@ def check_database():
     cursor.execute('SELECT 1; -- Healthcheck')
     row = cursor.fetchone()
     return row[0] == 1
+
+
+def check_cache_default():
+    """Check if the application can connect to the default cached and
+    read/write some dummy data.
+
+    """
+    dummy = str(uuid.uuid4())
+    key = 'healthcheck:%s' % dummy
+    cache.set(key, dummy, timeout=5)
+    cached_value = cache.get(key)
+    return cached_value == dummy
 
 
 def check_dummy_true():

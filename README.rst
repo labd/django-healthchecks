@@ -29,6 +29,6 @@ Add a setting with the available healthchecks:
 
     HEALTH_CHECKS = {
         'postgresql': 'django_healthchecks.contrib.check_database',
+        'cache_default': 'django_healthchecks.contrib.check_cache_default',
         'solr': 'your_project.lib.healthchecks.check_solr',
     }
-

@@ -1,3 +1,7 @@
+0.3.0 
+=====
+ - Add simple cache checker in contrib
+
 0.2.0 
 =====
  - Set proper caching headers (no-cache, no-store, max-age=0)
