@@ -1,3 +1,7 @@
+0.3.1
+=====
+ - Release 0.3.0 was broken (didn't test..), add unittests and fix issue
+
 0.3.0 
 =====
  - Add simple cache checker in contrib
