@@ -12,7 +12,7 @@ tests_require = [
 
 setup(
     name='django-healthchecks',
-    version='0.3.1',
+    version='0.4.0',
     description=description,
     url='https://github.com/mvantellingen/django-healthchecks',
     author="Michael van Tellingen",

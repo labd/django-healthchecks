@@ -1,3 +1,7 @@
+0.4.0
+=====
+ - Add support for Python 3.4 and Python 3.5 (Arthur Skowronek)
+
 0.3.1
 =====
  - Release 0.3.0 was broken (didn't test..), add unittests and fix issue
