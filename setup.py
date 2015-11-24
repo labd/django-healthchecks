@@ -5,9 +5,9 @@ with open('README.rst', 'r') as fh:
     description = '\n'.join(fh.readlines())
 
 tests_require = [
-    'pytest>=2.6.0',
-    'pytest-cov>=1.7.0',
-    'pytest-django>=2.8.0',
+    'pytest>=2.8.3',
+    'pytest-cov>=2.2.0',
+    'pytest-django>=2.9.1',
 ]
 
 setup(
