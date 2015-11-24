@@ -16,7 +16,7 @@ def test_index_view(rf, settings):
     view = views.HealthCheckView()
     result = view.dispatch(request)
 
-    data = json.loads(result.content)
+    data = json.loads(result.content.decode(result.charset))
     assert data == {
         'database': True,
         'redis': False,
@@ -33,7 +33,7 @@ def test_service_view(rf, settings):
     result = view.dispatch(request, service='database')
 
     assert result.status_code == 200
-    assert result.content == 'true'
+    assert result.content == b'true'
 
 
 def test_service_view_err(rf, settings):
@@ -46,7 +46,7 @@ def test_service_view_err(rf, settings):
 
     result = view.dispatch(request, service='database')
     assert result.status_code == 200
-    assert result.content == 'false'
+    assert result.content == b'false'
 
 
 def test_service_view_404(rf):
