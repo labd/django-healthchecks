@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.utils.importlib import import_module
-
 from six import iteritems
 
 try:

@@ -1,4 +1,4 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
 from django.views.decorators.cache import cache_control
 from django.views.generic import View
