@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.utils.importlib import import_module
 
+from six import iteritems
+
 try:
     from django.utils.module_loading import import_string
 except ImportError:
@@ -14,7 +16,7 @@ def create_report():
     report = {}
 
     checks = _get_registered_health_checks()
-    for service, func_string in checks.iteritems():
+    for service, func_string in iteritems(checks):
         check_func = import_string(func_string)
         report[service] = check_func() or False
     return report

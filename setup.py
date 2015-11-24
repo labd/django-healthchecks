@@ -19,6 +19,7 @@ setup(
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
         'Django>=1.7',
+        'six>=1.1',
     ],
     tests_require=tests_require,
     extras_require={'test': tests_require},
@@ -31,6 +32,12 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     zip_safe=False,
 )
