@@ -1,6 +1,11 @@
 sudo: false
 language: python
 
+
+matrix:
+    - DJANGO=Django==1.8.8
+    - DJANGO=Django==1.9.1
+
 python:
     - '2.7'
     - '3.4'
@@ -10,6 +15,7 @@ before_install:
     - pip install codecov
 
 install:
+    - pip install --pre $DJANGO
     - pip install -e .[test]
 
 script:

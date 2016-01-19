@@ -1,5 +1,6 @@
+from importlib import import_module
+
 from django.conf import settings
-from django.utils.importlib import import_module
 from six import iteritems
 
 try:
@@ -12,13 +13,21 @@ except ImportError:
 
 
 def create_report():
+    """Run all checks and return a tuple containing results and boolea to
+    indicate to indicate if all things are healthy.
+
+    """
     report = {}
+    has_error = False
 
     checks = _get_registered_health_checks()
     for service, func_string in iteritems(checks):
         check_func = import_string(func_string)
         report[service] = check_func() or False
-    return report
+
+        if not report[service]:
+            has_error = True
+    return report, not has_error
 
 
 def create_service_result(service):

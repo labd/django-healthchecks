@@ -49,6 +49,20 @@ def test_service_view_err(rf, settings):
     assert result.content == b'false'
 
 
+def test_service_view_err_custom_code(rf, settings):
+    settings.HEALTH_CHECKS_ERROR_CODE = 500
+    settings.HEALTH_CHECKS = {
+        'database': 'django_healthchecks.contrib.check_dummy_false'
+    }
+
+    request = rf.get('/')
+    view = views.HealthCheckServiceView()
+
+    result = view.dispatch(request, service='database')
+    assert result.status_code == 500
+    assert result.content == b'false'
+
+
 def test_service_view_404(rf):
     request = rf.get('/')
     view = views.HealthCheckServiceView()

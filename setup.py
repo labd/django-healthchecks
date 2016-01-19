@@ -12,7 +12,7 @@ tests_require = [
 
 setup(
     name='django-healthchecks',
-    version='0.4.1',
+    version='0.5.0',
     description=description,
     url='https://github.com/mvantellingen/django-healthchecks',
     author="Michael van Tellingen",
@@ -30,7 +30,12 @@ setup(
     include_package_data=True,
     license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
+		'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',

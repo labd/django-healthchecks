@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
 from django.views.decorators.cache import cache_control
@@ -18,8 +19,9 @@ class NoCacheMixin(object):
 class HealthCheckView(NoCacheMixin, View):
 
     def get(self, request, *args, **kwargs):
-        report = create_report()
-        return JsonResponse(report)
+        report, is_healthy = create_report()
+        status_code = 200 if is_healthy else _get_err_status_code()
+        return JsonResponse(report, status=status_code)
 
 
 class HealthCheckServiceView(NoCacheMixin, View):
@@ -29,6 +31,11 @@ class HealthCheckServiceView(NoCacheMixin, View):
             raise Http404()
 
         if result in (True, False):
-            return HttpResponse(str(result).lower())
+            status_code = 200 if result else _get_err_status_code()
+            return HttpResponse(str(result).lower(), status=status_code)
 
         return HttpResponse(result)
+
+
+def _get_err_status_code():
+    return getattr(settings, 'HEALTH_CHECKS_ERROR_CODE', 200)

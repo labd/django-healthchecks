@@ -32,3 +32,11 @@ Add a setting with the available healthchecks:
         'cache_default': 'django_healthchecks.contrib.check_cache_default',
         'solr': 'your_project.lib.healthchecks.check_solr',
     }
+
+By default the status code is always 200, you can change this to something
+else by using the `HEALTH_CHECKS_ERROR_CODE` setting:
+
+
+.. code-block:: python
+
+    HEALTH_CHECKS_ERROR_CODE = 503
