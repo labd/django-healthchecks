@@ -1,3 +1,13 @@
+0.6.0
+=====
+ - Optionally allow checks to receive the request. This allows the remote_addr 
+   check which allows you to check if the proxy / x-forwarded-for is correctly
+   set.
+
+0.5.0
+=====
+ - Allow setting a HTTP status code for failures (`HEALTH_CHECKS_ERROR_CODE`)
+
 0.4.1
 =====
  - Make the wheel file universal (py2/py3)

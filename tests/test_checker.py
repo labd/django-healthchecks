@@ -40,3 +40,12 @@ def test_create_service_result(settings):
 def test_create_service_result_unknown(settings):
     result = checker.create_service_result('database')
     assert result is None
+
+
+def test_create_with_request(rf, settings):
+    settings.HEALTH_CHECKS = {
+        'remote_addr': 'django_healthchecks.contrib.check_remote_addr'
+    }
+    request = rf.get('/')
+    result = checker.create_service_result('remote_addr', request)
+    assert result == '127.0.0.1'

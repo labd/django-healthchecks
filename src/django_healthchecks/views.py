@@ -19,14 +19,14 @@ class NoCacheMixin(object):
 class HealthCheckView(NoCacheMixin, View):
 
     def get(self, request, *args, **kwargs):
-        report, is_healthy = create_report()
+        report, is_healthy = create_report(request=request)
         status_code = 200 if is_healthy else _get_err_status_code()
         return JsonResponse(report, status=status_code)
 
 
 class HealthCheckServiceView(NoCacheMixin, View):
     def get(self, request, service, *args, **kwargs):
-        result = create_service_result(service)
+        result = create_service_result(service=service, request=request)
         if result is None:
             raise Http404()
 

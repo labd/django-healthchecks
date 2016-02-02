@@ -30,3 +30,7 @@ def check_dummy_true():
 
 def check_dummy_false():
     return False
+
+
+def check_remote_addr(request):
+    return request.META['REMOTE_ADDR']
