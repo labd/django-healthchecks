@@ -14,10 +14,18 @@ Status
 .. image:: https://pypip.in/version/django_healthchecks/badge.svg
     :target: https://pypi.python.org/pypi/django_healthchecks/
 
+Installation
+============
+
+.. code-block:: shell
+
+   pip install django_healthchecks
+   
 Usage
 =====
 
 Add the following to your urls.py:
+
 
 .. code-block:: python
 
