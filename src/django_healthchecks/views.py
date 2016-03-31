@@ -20,7 +20,12 @@ class NoCacheMixin(object):
 class HealthCheckView(NoCacheMixin, View):
 
     def get(self, request, *args, **kwargs):
-        report, is_healthy = create_report(request=request)
+        try:
+            report, is_healthy = create_report(request=request)
+        except PermissionDenied:
+            response = HttpResponse(status=401)
+            response['WWW-Authenticate'] = 'Basic realm="Healthchecks"'
+            return response
         status_code = 200 if is_healthy else _get_err_status_code()
         return JsonResponse(report, status=status_code)
 

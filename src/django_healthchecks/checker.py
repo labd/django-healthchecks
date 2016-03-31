@@ -37,7 +37,7 @@ def create_report(request=None):
 
 
 def create_service_result(service, request=None):
-    functions = list(_get_check_functions(only=[service], request=request))
+    functions = list(_get_check_functions(name=service, request=request))
     if not functions:
         return
 
@@ -45,19 +45,16 @@ def create_service_result(service, request=None):
     return check_func() or False
 
 
-def _get_check_functions(only=None, request=None):
+def _get_check_functions(name=None, request=None):
     checks = _get_registered_health_checks()
-    if not checks:
+    if not checks or (name and name not in checks):
         raise StopIteration()
 
     checks = _filter_checks_on_permission(request, checks)
-    if not checks:
+    if not checks or (name and name not in checks):
         raise PermissionDenied()
 
     for service, func_string in checks.items():
-        if only and service not in only:
-            continue
-
         check_func = import_string(func_string)
 
         spec = inspect.getargspec(check_func)
