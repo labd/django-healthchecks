@@ -3,7 +3,7 @@ import functools
 import inspect
 from importlib import import_module
 
-from six import iteritems
+import six
 
 from django.conf import settings
 
@@ -54,7 +54,7 @@ def _get_check_functions(only=None, request=None):
     if not checks:
         raise PermissionDenied()
 
-    for service, func_string in iteritems(checks):
+    for service, func_string in checks.items():
         if only and service not in only:
             continue
 
@@ -95,5 +95,6 @@ def _get_basic_auth(request):
         return
 
     auth = auth.split()
-    if len(auth) == 2 and auth[0].lower() == 'basic':
-        return tuple(base64.b64decode(auth[1]).split(':'))
+    if len(auth) == 2 and auth[0].lower() == b'basic':
+        credentials = base64.b64decode(auth[1]).decode('latin-1')
+        return tuple(credentials.split(':'))

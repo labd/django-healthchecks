@@ -71,7 +71,7 @@ def test_filter_checks_on_permission(rf, settings):
     }
 
     request = rf.get(
-        '/', HTTP_AUTHORIZATION='Basic %s' % base64.b64encode('user:password'))
+        '/', HTTP_AUTHORIZATION=b'Basic %s' % base64.b64encode(b'user:password'))
 
     result = checker._filter_checks_on_permission(request, checks)
     assert result == {
