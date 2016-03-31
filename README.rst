@@ -48,3 +48,14 @@ else by using the `HEALTH_CHECKS_ERROR_CODE` setting:
 .. code-block:: python
 
     HEALTH_CHECKS_ERROR_CODE = 503
+
+
+You can also add some simple protection to your healthchecks via basic auth.
+This can be specified per check or a wildcard can be used `*`.
+
+.. code-block:: python
+
+    HEALTH_CHECKS_BASIC_AUTH = {
+        '*': [('admin', 'pass')],
+        'solr': [],
+    }

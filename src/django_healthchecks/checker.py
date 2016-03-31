@@ -1,9 +1,11 @@
+import base64
 import functools
 import inspect
 from importlib import import_module
 
-from django.conf import settings
 from six import iteritems
+
+from django.conf import settings
 
 try:
     from django.utils.module_loading import import_string
@@ -12,6 +14,10 @@ except ImportError:
         module_name, func_name = value.rsplit('.', 1)
         module = import_module(module_name)
         return getattr(module, func_name)
+
+
+class PermissionDenied(Exception):
+    pass
 
 
 def create_report(request=None):
@@ -41,6 +47,13 @@ def create_service_result(service, request=None):
 
 def _get_check_functions(only=None, request=None):
     checks = _get_registered_health_checks()
+    if not checks:
+        raise StopIteration()
+
+    checks = _filter_checks_on_permission(request, checks)
+    if not checks:
+        raise PermissionDenied()
+
     for service, func_string in iteritems(checks):
         if only and service not in only:
             continue
@@ -56,3 +69,31 @@ def _get_check_functions(only=None, request=None):
 
 def _get_registered_health_checks():
     return getattr(settings, 'HEALTH_CHECKS', {})
+
+
+def _filter_checks_on_permission(request, checks):
+    permissions = getattr(settings, 'HEALTH_CHECKS_BASIC_AUTH', {})
+    if not permissions:
+        return checks
+
+    allowed = {}
+    for name in checks.keys():
+        required_credentials = permissions.get(name, permissions.get('*'))
+
+        if required_credentials:
+            credentials = _get_basic_auth(request)
+            if not credentials or credentials not in required_credentials:
+                continue
+
+        allowed[name] = checks[name]
+    return allowed
+
+
+def _get_basic_auth(request):
+    auth = request.META.get('HTTP_AUTHORIZATION')
+    if not auth:
+        return
+
+    auth = auth.split()
+    if len(auth) == 2 and auth[0].lower() == 'basic':
+        return tuple(base64.b64decode(auth[1]).split(':'))

@@ -5,6 +5,7 @@ from django.views.decorators.cache import cache_control
 from django.views.generic import View
 
 from django_healthchecks.checker import create_report, create_service_result
+from django_healthchecks.checker import PermissionDenied
 
 
 class NoCacheMixin(object):
@@ -26,7 +27,13 @@ class HealthCheckView(NoCacheMixin, View):
 
 class HealthCheckServiceView(NoCacheMixin, View):
     def get(self, request, service, *args, **kwargs):
-        result = create_service_result(service=service, request=request)
+        try:
+            result = create_service_result(service=service, request=request)
+        except PermissionDenied:
+            response = HttpResponse(status=401)
+            response['WWW-Authenticate'] = 'Basic realm="Healthchecks"'
+            return response
+
         if result is None:
             raise Http404()
 

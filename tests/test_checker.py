@@ -1,3 +1,5 @@
+import base64
+
 from django_healthchecks import checker
 
 
@@ -49,3 +51,30 @@ def test_create_with_request(rf, settings):
     request = rf.get('/')
     result = checker.create_service_result('remote_addr', request)
     assert result == '127.0.0.1'
+
+
+def test_filter_checks_on_permission(rf, settings):
+    checks = {
+        'public': 'django_healthchecks.contrib.check_dummy_true',
+        'private': 'django_healthchecks.contrib.check_dummy_true'
+    }
+
+    settings.HEALTH_CHECKS_BASIC_AUTH = {
+        '*': [('user', 'password')],
+        'public': [],
+    }
+
+    request = rf.get('/')
+    result = checker._filter_checks_on_permission(request, checks)
+    assert result == {
+        'public': 'django_healthchecks.contrib.check_dummy_true',
+    }
+
+    request = rf.get(
+        '/', HTTP_AUTHORIZATION='Basic %s' % base64.b64encode('user:password'))
+
+    result = checker._filter_checks_on_permission(request, checks)
+    assert result == {
+        'public': 'django_healthchecks.contrib.check_dummy_true',
+        'private': 'django_healthchecks.contrib.check_dummy_true'
+    }

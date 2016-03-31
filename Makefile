@@ -1,5 +1,8 @@
-.PHONY: test upload
+.PHONY: install test upload
 
+
+install:
+	pip install -e .[test]
 
 test:
 	py.test

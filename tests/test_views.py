@@ -69,3 +69,18 @@ def test_service_view_404(rf):
 
     with pytest.raises(Http404):
         view.dispatch(request, service='database')
+
+
+def test_service_require_auth(rf, settings):
+    settings.HEALTH_CHECKS = {
+        'database': 'django_healthchecks.contrib.check_dummy_true'
+    }
+    settings.HEALTH_CHECKS_BASIC_AUTH = {
+        '*': [('user', 'password')],
+    }
+
+    request = rf.get('/')
+    view = views.HealthCheckServiceView()
+
+    result = view.dispatch(request, service='database')
+    assert result.status_code == 401
