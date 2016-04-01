@@ -1,3 +1,8 @@
+0.7.0
+=====
+ - Introduce the `HEALTH_CHECKS_BASIC_AUTH` setting. This allows setting
+   authentication for specific (or all) healthcheck endpoints
+
 0.6.0
 =====
  - Optionally allow checks to receive the request. This allows the remote_addr 
