@@ -1,5 +1,6 @@
+===================
 django-healthchecks
--------------------
+===================
 
 Simple Django app/framework to publish health check for monitoring purposes
 
