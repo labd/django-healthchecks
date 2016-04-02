@@ -1,9 +1,5 @@
 from setuptools import find_packages, setup
 
-
-with open('README.rst', 'r') as fh:
-    description = '\n'.join(fh.readlines())
-
 tests_require = [
     'pytest>=2.8.3',
     'pytest-cov>=2.2.0',
@@ -12,8 +8,9 @@ tests_require = [
 
 setup(
     name='django-healthchecks',
-    version='0.7.0',
-    description=description,
+    version='0.7.1',
+    description="Simple Django app/framework to publish health checks",
+    long_description=open('README.rst', 'r').read(),
     url='https://github.com/mvantellingen/django-healthchecks',
     author="Michael van Tellingen",
     author_email="michaelvantellingen@gmail.com",
@@ -23,8 +20,8 @@ setup(
     ],
     tests_require=tests_require,
     extras_require={'test': tests_require},
-    entry_points={
-    },
+    use_scm_version=True,
+    entry_points={},
     package_dir={'': 'src'},
     packages=find_packages('src'),
     include_package_data=True,
