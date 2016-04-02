@@ -12,8 +12,8 @@ Status
 .. image:: http://codecov.io/github/mvantellingen/django-healthchecks/coverage.svg?branch=master 
     :target: http://codecov.io/github/mvantellingen/django-healthchecks?branch=master
     
-.. image:: https://pypip.in/version/django_healthchecks/badge.svg
-    :target: https://pypi.python.org/pypi/django_healthchecks/
+.. image:: https://img.shields.io/pypi/v/django-healthchecks.svg
+    :target: https://pypi.python.org/pypi/django-healthchecks/
 
 Installation
 ============
