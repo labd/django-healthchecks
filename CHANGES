@@ -1,3 +1,7 @@
+0.7.1
+=====
+ - Minor release to fix readme on pypi
+
 0.7.0
 =====
  - Introduce the `HEALTH_CHECKS_BASIC_AUTH` setting. This allows setting

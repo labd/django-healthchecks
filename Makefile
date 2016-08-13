@@ -1,11 +1,20 @@
-.PHONY: install test upload
+.PHONY: install test upload docs
 
 
 install:
-	pip install -e .[test]
+	pip install -e .[docs,test]
 
 test:
 	py.test
+
+retest:
+	py.test -vvv --lf
+
+coverage:
+	py.test --cov=django_healthchecks --cov-report=term-missing --cov-report=html
+
+docs:
+	$(MAKE) -C docs html
 
 release:
 	rm -rf dist/*
