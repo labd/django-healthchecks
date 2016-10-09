@@ -1,7 +1,8 @@
 import json
-from django.http import Http404
+from collections import OrderedDict
 
 import pytest
+from django.http import Http404
 
 from django_healthchecks import views
 
@@ -24,9 +25,10 @@ def test_index_view(rf, settings):
 
 
 def test_service_view(rf, settings):
-    settings.HEALTH_CHECKS = {
-        'database': 'django_healthchecks.contrib.check_dummy_true'
-    }
+    settings.HEALTH_CHECKS = OrderedDict([
+        ('redis', 'django_healthchecks.contrib.check_dummy_false'),
+        ('database', 'django_healthchecks.contrib.check_dummy_true'),
+    ])
 
     request = rf.get('/')
     view = views.HealthCheckServiceView()
