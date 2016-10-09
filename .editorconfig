@@ -7,6 +7,10 @@ balanced_wrapping = true
 known_first_party = django_healthchecks,tests
 use_parentheses = true
 
+[*.yml]
+indent_size = 2
+
+
 [Makefile]
 indent_style = tab
 indent_size = 4
