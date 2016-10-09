@@ -55,6 +55,9 @@ def _get_check_functions(name=None, request=None):
         raise PermissionDenied()
 
     for service, func_string in checks.items():
+        if name and name != service:
+            continue
+
         check_func = import_string(func_string)
 
         spec = inspect.getargspec(check_func)
