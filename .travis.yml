@@ -8,21 +8,20 @@ env:
     - DJANGO=Django==1.9.10
     - DJANGO=Django==1.10.2
 
+python:
+  - '2.7'
+  - '3.4'
+  - '3.5'
 
-  python:
-    - '2.7'
-    - '3.4'
-    - '3.5'
+before_install:
+  - pip install codecov
 
-  before_install:
-    - pip install codecov
+install:
+  - pip install --pre $DJANGO
+  - pip install -e .[test]
 
-  install:
-    - pip install --pre $DJANGO
-    - pip install -e .[test]
+script:
+  - py.test --cov=django_healthchecks --cov-report=term-missing
 
-  script:
-    - py.test --cov=django_healthchecks --cov-report=term-missing
-
-  after_success:
-    - codecov
+after_success:
+  - codecov
