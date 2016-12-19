@@ -3,9 +3,8 @@ import functools
 import inspect
 from importlib import import_module
 
-import six
-
 from django.conf import settings
+from django.utils.text import force_text
 
 try:
     from django.utils.module_loading import import_string
@@ -58,7 +57,10 @@ def _get_check_functions(name=None, request=None):
         if name and name != service:
             continue
 
-        check_func = import_string(func_string)
+        if callable(func_string):
+            check_func = func_string
+        else:
+            check_func = import_string(func_string)
 
         spec = inspect.getargspec(check_func)
         if spec.args == ['request']:
@@ -95,6 +97,6 @@ def _get_basic_auth(request):
         return
 
     auth = auth.split()
-    if len(auth) == 2 and auth[0].lower() == b'basic':
+    if len(auth) == 2 and force_text(auth[0]).lower() == u'basic':
         credentials = base64.b64decode(auth[1]).decode('latin-1')
         return tuple(credentials.split(':'))
