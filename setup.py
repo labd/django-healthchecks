@@ -5,9 +5,9 @@ docs_require = [
 ]
 
 tests_require = [
-    'pytest>=2.8.3',
-    'pytest-cov>=2.2.0',
-    'pytest-django>=2.9.1',
+    'coverage==.4.2',
+    'pytest==3.0.5',
+    'pytest-django==3.1.2',
 
     # Linting
     'isort==4.2.5',
