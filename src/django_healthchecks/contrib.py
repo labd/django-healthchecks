@@ -6,9 +6,9 @@ from django.db import connection
 
 def check_database():
     """Check if the application can perform a dummy sql query"""
-    cursor = connection.cursor()
-    cursor.execute('SELECT 1; -- Healthcheck')
-    row = cursor.fetchone()
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT 1; -- Healthcheck')
+        row = cursor.fetchone()
     return row[0] == 1
 
 
