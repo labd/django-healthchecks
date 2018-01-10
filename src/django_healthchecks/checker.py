@@ -4,7 +4,7 @@ import inspect
 from importlib import import_module
 
 from django.conf import settings
-from django.utils.text import force_text
+from django.utils.encoding import force_text
 
 try:
     from django.utils.module_loading import import_string
