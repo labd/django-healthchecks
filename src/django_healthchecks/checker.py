@@ -60,7 +60,7 @@ def _get_check_functions(name=None, request=None):
             continue
 
         if func_string.startswith(('https://', 'http://')):
-            check_func = _fetch_remote_healthcheck(func_string) 
+            check_func = _remote_healthcheck_func(func_string) 
         elif callable(func_string):
             check_func = func_string
         else:
@@ -77,7 +77,7 @@ def _get_registered_health_checks():
     return getattr(settings, 'HEALTH_CHECKS', {})
 
 
-def _fetch_remote_healthcheck(url):
+def _remote_healthcheck_func(url):
     return lambda: requests.get(url).json()
 
 
