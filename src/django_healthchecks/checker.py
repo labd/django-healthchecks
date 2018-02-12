@@ -6,6 +6,8 @@ from importlib import import_module
 from django.conf import settings
 from django.utils.encoding import force_text
 
+import requests
+
 try:
     from django.utils.module_loading import import_string
 except ImportError:
@@ -20,7 +22,7 @@ class PermissionDenied(Exception):
 
 
 def create_report(request=None):
-    """Run all checks and return a tuple containing results and boolea to
+    """Run all checks and return a tuple containing results and boolean to
     indicate to indicate if all things are healthy.
 
     """
@@ -57,7 +59,9 @@ def _get_check_functions(name=None, request=None):
         if name and name != service:
             continue
 
-        if callable(func_string):
+        if func_string.startswith(('https://', 'http://')):
+            check_func = _fetch_remote_healthcheck(func_string) 
+        elif callable(func_string):
             check_func = func_string
         else:
             check_func = import_string(func_string)
@@ -71,6 +75,10 @@ def _get_check_functions(name=None, request=None):
 
 def _get_registered_health_checks():
     return getattr(settings, 'HEALTH_CHECKS', {})
+
+
+def _fetch_remote_healthcheck(url):
+    return lambda: requests.get(url).json()
 
 
 def _filter_checks_on_permission(request, checks):

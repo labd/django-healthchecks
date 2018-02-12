@@ -21,6 +21,7 @@ Installation
 .. code-block:: shell
 
    pip install django_healthchecks
+
    
 Usage
 =====
@@ -32,6 +33,7 @@ Add the following to your urls.py:
 
     url(r'^healthchecks/', include('django_healthchecks.urls')),
 
+
 Add a setting with the available healthchecks:
 
 .. code-block:: python
@@ -42,9 +44,21 @@ Add a setting with the available healthchecks:
         'solr': 'your_project.lib.healthchecks.check_solr',
     }
 
+
+You can also include healthchecks that are exposed by other services. This
+is useful when you want to monitor if depending services are up:
+
+.. code-block:: python
+
+    HEALTH_CHECKS = {
+        ...
+        'my_microservice': 'https://my-service.services.internal/healthchecks/',
+        ...
+    }
+
+
 By default the status code is always 200, you can change this to something
 else by using the `HEALTH_CHECKS_ERROR_CODE` setting:
-
 
 .. code-block:: python
 

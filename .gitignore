@@ -1,5 +1,6 @@
 *.egg-info
 *.pyc
+*.sqlite*
 .tox
 .coverage
 .coverage.*
@@ -7,7 +8,6 @@
 .cache
 .python-version
 .venv
-.idea/
 
 /build/
 /dist/
@@ -17,3 +17,4 @@
 
 # Editors
 .idea/
+.vscode/
