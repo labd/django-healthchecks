@@ -30,7 +30,10 @@ def create_report(request=None):
     has_error = False
 
     for service, check_func in _get_check_functions(request=request):
-        report[service] = check_func() or False
+        try:
+            report[service] = check_func()
+        except:
+            report[service] = False
 
         if not report[service]:
             has_error = True
@@ -43,7 +46,11 @@ def create_service_result(service, request=None):
         return
 
     check_func = functions[0][1]
-    return check_func() or False
+    try:
+        result = check_func()
+    except:
+        result = False
+    return result
 
 
 def _get_check_functions(name=None, request=None):
@@ -60,7 +67,7 @@ def _get_check_functions(name=None, request=None):
             continue
 
         if func_string.startswith(('https://', 'http://')):
-            check_func = _remote_healthcheck_func(func_string) 
+            check_func = _http_healthcheck_func(func_string)
         elif callable(func_string):
             check_func = func_string
         else:
@@ -77,8 +84,13 @@ def _get_registered_health_checks():
     return getattr(settings, 'HEALTH_CHECKS', {})
 
 
-def _remote_healthcheck_func(url):
-    return lambda: requests.get(url).json()
+def _http_healthcheck_func(url):
+    return lambda: requests.get(url,
+        timeout=_get_http_healthcheck_timeout()).json()
+
+
+def _get_http_healthcheck_timeout():
+    return getattr(settings, 'HEALTH_CHECKS_HTTP_TIMEOUT', 0.5)
 
 
 def _filter_checks_on_permission(request, checks):

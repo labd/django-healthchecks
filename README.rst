@@ -45,8 +45,8 @@ Add a setting with the available healthchecks:
     }
 
 
-You can also include healthchecks that are exposed by other services. This
-is useful when you want to monitor if depending services are up:
+You can also include healthchecks over http. This is useful when you want to
+monitor if depending services are up:
 
 .. code-block:: python
 
@@ -55,6 +55,14 @@ is useful when you want to monitor if depending services are up:
         'my_microservice': 'https://my-service.services.internal/healthchecks/',
         ...
     }
+
+
+By default, http health checks will time out after 500ms. You can override this
+as follows:
+
+.. code-block:: python
+
+    HEALTH_CHECKS_HTTP_TIMEOUT = 0.5
 
 
 By default the status code is always 200, you can change this to something
