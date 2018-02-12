@@ -28,6 +28,7 @@ setup(
     install_requires=[
         'Django>=1.7',
         'six>=1.1',
+        'requests>=2.18.4',
     ],
     tests_require=tests_require,
     extras_require={
