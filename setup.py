@@ -8,6 +8,7 @@ tests_require = [
     'coverage==.4.2',
     'pytest==3.0.5',
     'pytest-django==3.1.2',
+    'requests-mock==1.4.0',
 
     # Linting
     'isort==4.2.5',
