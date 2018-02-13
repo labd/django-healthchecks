@@ -31,13 +31,25 @@ class HealthCheckView(NoCacheMixin, View):
 
 
 class HealthCheckServiceView(NoCacheMixin, View):
+
     def get(self, request, service, *args, **kwargs):
+        service_path = list(filter(lambda s: s, service.split('/')))
+        service = service_path.pop(0)
+
         try:
             result = create_service_result(service=service, request=request)
         except PermissionDenied:
             response = HttpResponse(status=401)
             response['WWW-Authenticate'] = 'Basic realm="Healthchecks"'
             return response
+
+        return self.create_result_response(service, result, service_path)
+
+    def create_result_response(self, service, result, service_path):
+        for nested in service_path:
+            result = result.get(nested, None)
+            if result is None:
+                break
 
         if result is None:
             raise Http404()
@@ -46,6 +58,8 @@ class HealthCheckServiceView(NoCacheMixin, View):
             status_code = 200 if result else _get_err_status_code()
             return HttpResponse(str(result).lower(), status=status_code)
 
+        if type(result) != str:
+            return JsonResponse(result)
         return HttpResponse(result)
 
 
