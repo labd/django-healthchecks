@@ -124,9 +124,11 @@ STATIC_URL = '/static/'
 HEALTH_CHECKS = {
     'public': 'django_healthchecks.contrib.check_dummy_true',
     'private': 'django_healthchecks.contrib.check_dummy_false',
+    'remote': 'https://lfd-tst.labd.io/api/healthchecks/',
+    'callable': lambda: True,
 }
 
 HEALTH_CHECKS_BASIC_AUTH = {
-    '*': [('admin', 'pass')],
+    # '*': [('admin', 'pass')],
     'public': [],
 }
