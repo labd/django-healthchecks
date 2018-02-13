@@ -1,3 +1,5 @@
+import six
+
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.http.response import Http404
@@ -58,7 +60,7 @@ class HealthCheckServiceView(NoCacheMixin, View):
             status_code = 200 if result else _get_err_status_code()
             return HttpResponse(str(result).lower(), status=status_code)
 
-        if type(result) != str:
+        if not isinstance(result, six.text_type):
             return JsonResponse(result)
         return HttpResponse(result)
 
