@@ -6,16 +6,18 @@ import requests
 import requests_mock
 
 
-@requests_mock.Mocker(kw='mock')
-def test_create_report(settings, **kwargs):
-    kwargs['mock'].get('https://test.com/api/healthchecks/', 
-        text='{"cache_default": true}')
-
+def test_create_report(settings):
     settings.HEALTH_CHECKS = {
         'database': 'django_healthchecks.contrib.check_dummy_true',
         'remote_service': 'https://test.com/api/healthchecks/',
     }
-    result, is_healthy = checker.create_report()
+
+    with requests_mock.Mocker() as mock:
+        mock.get(
+            'https://test.com/api/healthchecks/',
+            text='{"cache_default": true}')
+        result, is_healthy = checker.create_report()
+
     expected = {
         'database': True,
         'remote_service': {'cache_default': True},
@@ -25,17 +27,18 @@ def test_create_report(settings, **kwargs):
     assert is_healthy is True
 
 
-@requests_mock.Mocker(kw='mock')
-def test_service_timeout(settings, **kwargs):
-    kwargs['mock'].register_uri('GET',
-        'http://timeout.com/api/healthchecks/',
-        exc=requests.exceptions.Timeout)
-
+def test_service_timeout(settings):
     settings.HEALTH_CHECKS = {
         'database': 'django_healthchecks.contrib.check_dummy_true',
         'timeout_service': 'http://timeout.com/api/healthchecks/',
     }
-    result, is_healthy = checker.create_report()
+
+    with requests_mock.Mocker() as mock:
+        mock.register_uri(
+            'GET', 'http://timeout.com/api/healthchecks/',
+            exc=requests.exceptions.Timeout)
+        result, is_healthy = checker.create_report()
+
     expected = {
         'database': True,
         'timeout_service': False
