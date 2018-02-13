@@ -3,10 +3,10 @@ import functools
 import inspect
 from importlib import import_module
 
+import requests
 from django.conf import settings
 from django.utils.encoding import force_text
 
-import requests
 
 try:
     from django.utils.module_loading import import_string
@@ -30,10 +30,7 @@ def create_report(request=None):
     has_error = False
 
     for service, check_func in _get_check_functions(request=request):
-        try:
-            report[service] = check_func()
-        except:
-            report[service] = False
+        report[service] = check_func() or False
 
         if not report[service]:
             has_error = True
@@ -46,10 +43,7 @@ def create_service_result(service, request=None):
         return
 
     check_func = functions[0][1]
-    try:
-        result = check_func()
-    except:
-        result = False
+    result = check_func() or False
     return result
 
 
@@ -85,8 +79,17 @@ def _get_registered_health_checks():
 
 
 def _http_healthcheck_func(url):
-    return lambda: requests.get(url,
-        timeout=_get_http_healthcheck_timeout()).json()
+    def handle_remote_request():
+        try:
+            response = requests.get(url, timeout=_get_http_healthcheck_timeout())
+        except requests.exceptions.RequestException:
+            return False
+
+        if response.ok:
+            return response.json()
+        return False
+
+    return handle_remote_request
 
 
 def _get_http_healthcheck_timeout():
