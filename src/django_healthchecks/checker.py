@@ -60,10 +60,10 @@ def _get_check_functions(name=None, request=None):
         if name and name != service:
             continue
 
-        if func_string.startswith(('https://', 'http://')):
-            check_func = _http_healthcheck_func(func_string)
-        elif callable(func_string):
+        if callable(func_string):
             check_func = func_string
+        elif func_string.startswith(('https://', 'http://')):
+            check_func = _http_healthcheck_func(func_string)
         else:
             check_func = import_string(func_string)
 
