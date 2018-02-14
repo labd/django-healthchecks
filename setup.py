@@ -19,7 +19,7 @@ tests_require = [
 
 setup(
     name='django-healthchecks',
-    version='1.3.0',
+    version='1.4.0',
     description="Simple Django app/framework to publish health checks",
     long_description=open('README.rst', 'r').read(),
     url='https://github.com/mvantellingen/django-healthchecks',
