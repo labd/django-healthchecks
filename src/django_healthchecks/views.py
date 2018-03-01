@@ -59,10 +59,11 @@ class HealthCheckServiceView(NoCacheMixin, View):
         if result in (True, False):
             status_code = 200 if result else _get_err_status_code()
             return HttpResponse(str(result).lower(), status=status_code)
-
-        if not isinstance(result, six.text_type):
-            return JsonResponse(result)
-        return HttpResponse(result)
+        elif isinstance(result, six.string_types) or isinstance(result, bytes):
+            return HttpResponse(result)
+        else:
+            # Django requires safe=False for non-dict values.
+            return JsonResponse(result, safe=False)
 
 
 def _get_err_status_code():
