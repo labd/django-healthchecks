@@ -1,25 +1,25 @@
 from setuptools import find_packages, setup
 
 docs_require = [
-    'sphinx>=1.4.0',
+    'sphinx>=1.4.1',
 ]
 
 tests_require = [
     'coverage==.4.2',
     'pytest==3.0.5',
     'pytest-django==3.1.2',
-    'requests-mock==1.4.0',
+    'requests-mock==1.4.1',
 
     # Linting
     'isort==4.2.5',
     'flake8==3.0.3',
     'flake8-blind-except==0.1.1',
-    'flake8-debugger==1.4.0',
+    'flake8-debugger==1.4.1',
 ]
 
 setup(
     name='django-healthchecks',
-    version='1.4.0',
+    version='1.4.1',
     description="Simple Django app/framework to publish health checks",
     long_description=open('README.rst', 'r').read(),
     url='https://github.com/mvantellingen/django-healthchecks',
