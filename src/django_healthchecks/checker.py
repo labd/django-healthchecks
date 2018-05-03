@@ -1,20 +1,11 @@
 import base64
 import functools
 import inspect
-from importlib import import_module
 
 import requests
 from django.conf import settings
 from django.utils.encoding import force_text
-
-
-try:
-    from django.utils.module_loading import import_string
-except ImportError:
-    def import_string(value):
-        module_name, func_name = value.rsplit('.', 1)
-        module = import_module(module_name)
-        return getattr(module, func_name)
+from django.utils.module_loading import import_string
 
 
 class PermissionDenied(Exception):
