@@ -34,3 +34,15 @@ def check_dummy_false():
 
 def check_remote_addr(request):
     return request.META['REMOTE_ADDR']
+
+
+def check_expired_heartbeats():
+    """Check which heartbeats have expired."""
+    from django_healthchecks.heartbeats import get_expired_heartbeats
+    return get_expired_heartbeats() or None
+
+
+def check_heartbeats():
+    """Give a dict of each check and it's status."""
+    from django_healthchecks.heartbeats import get_heartbeat_statuses
+    return get_heartbeat_statuses() or None

@@ -9,6 +9,7 @@ tests_require = [
     'pytest==3.0.5',
     'pytest-django==3.1.2',
     'requests-mock==1.4.0',
+    'freezegun==0.3.10',
 
     # Linting
     'isort==4.2.5',
@@ -26,7 +27,7 @@ setup(
     author="Michael van Tellingen",
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
-        'Django>=1.7',
+        'Django>=1.10',
         'six>=1.1',
         'requests>=2.18.4',
     ],
@@ -45,11 +46,9 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.7',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
