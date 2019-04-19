@@ -1,3 +1,9 @@
+1.5.0(unreleased)
+=================
+ - added support for python 3.7
+ - added etag support
+
+
 1.4.0
 =====
  - Add support for nested remote healthchecks (#10)
@@ -30,7 +36,7 @@
 
 0.6.0
 =====
- - Optionally allow checks to receive the request. This allows the remote_addr 
+ - Optionally allow checks to receive the request. This allows the remote_addr
    check which allows you to check if the proxy / x-forwarded-for is correctly
    set.
 
@@ -50,17 +56,17 @@
 =====
  - Release 0.3.0 was broken (didn't test..), add unittests and fix issue
 
-0.3.0 
+0.3.0
 =====
  - Add simple cache checker in contrib
 
-0.2.0 
+0.2.0
 =====
  - Set proper caching headers (no-cache, no-store, max-age=0)
 
 0.1.2
 =====
- - Return raw status value instead of forcing it to a boolean on the 
+ - Return raw status value instead of forcing it to a boolean on the
    detail page.
 
 0.1.1

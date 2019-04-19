@@ -1,15 +1,15 @@
 from setuptools import find_packages, setup
 
 docs_require = [
-    'sphinx>=1.4.0',
+    'sphinx>=2.0.1',
 ]
 
 tests_require = [
-    'coverage==4.5.1',
-    'pytest==3.0.5',
-    'pytest-django==3.1.2',
-    'requests-mock==1.4.0',
-    'freezegun==0.3.10',
+    'coverage==4.5.3',
+    'pytest==4.4.1',
+    'pytest-django==3.4.8',
+    'requests-mock==1.5.2',
+    'freezegun==0.3.11',
 
     # Linting
     'isort==4.2.5',
@@ -27,9 +27,10 @@ setup(
     author="Michael van Tellingen",
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
-        'Django>=1.10',
+        'Django>=1.11',
         'six>=1.1',
-        'requests>=2.18.4',
+        'requests>=2.21.0',
+        'certifi>=2019.3.9',
     ],
     tests_require=tests_require,
     extras_require={
@@ -46,9 +47,10 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.2',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
@@ -57,6 +59,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     zip_safe=False,
 )
