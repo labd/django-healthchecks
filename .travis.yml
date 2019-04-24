@@ -19,7 +19,7 @@ matrix:
     - python: 3.5
       env: TOXENV=py35-django22
       dist: xenial
-      sudo : true
+      sudo: true
     - python: 3.6
       env: TOXENV=py36-django111
     - python: 3.6
@@ -29,23 +29,23 @@ matrix:
     - python: 3.6
       env: TOXENV=py36-django22
       dist: xenial
-      sudo : true
+      sudo: true
     - python: 3.7
       env: TOXENV=py37-django111
       dist: xenial
-      sudo : true
+      sudo: true
     - python: 3.7
       env: TOXENV=py37-django20
       dist: xenial
-      sudo : true
+      sudo: true
     - python: 3.7
       env: TOXENV=py37-django21
       dist: xenial
-      sudo : true
+      sudo: true
     - python: 3.7
       env: TOXENV=py37-django22
       dist: xenial
-      sudo : true
+      sudo: true
 
 before_cache:
   - rm -rf $HOME/.cache/pip/log
