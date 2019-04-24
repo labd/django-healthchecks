@@ -23,14 +23,19 @@ def test_index_view(rf, settings):
     }
 
     request = rf.get('/')
-    view = views.HealthCheckView()
-    result = view.dispatch(request)
+    view = views.HealthCheckView.as_view()
+    result = view(request)
 
     data = json.loads(result.content.decode(result.charset))
     assert data == {
         'database': True,
         'redis': False,
     }
+    assert result.has_header('Etag')
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request)
+    assert result.status_code == 304
 
 
 def test_service_view_bool(rf, settings):
@@ -40,11 +45,16 @@ def test_service_view_bool(rf, settings):
     ])
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
-    result = view.dispatch(request, service='database')
+    view = views.HealthCheckServiceView.as_view()
+    result = view(request, service='database')
 
     assert result.status_code == 200
     assert result.content == b'true'
+    assert result.has_header('Etag')
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request, service='database')
+    assert result.status_code == 304
 
 
 def test_service_view_bytes(rf, settings):
@@ -54,11 +64,16 @@ def test_service_view_bytes(rf, settings):
     ])
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
-    result = view.dispatch(request, service='ip')
+    view = views.HealthCheckServiceView.as_view()
+    result = view(request, service='ip')
 
     assert result.status_code == 200
     assert result.content == b'127.0.0.1'
+    assert result.has_header('Etag')
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request, service='ip')
+    assert result.status_code == 304
 
 
 def test_service_view_int(rf, settings):
@@ -68,12 +83,13 @@ def test_service_view_int(rf, settings):
     ])
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
-    result = view.dispatch(request, service='val')
+    view = views.HealthCheckServiceView.as_view()
+    result = view(request, service='val')
 
     assert result.status_code == 200
     assert result['Content-Type'] == 'application/json'
     assert result.content == b'2'
+    assert result.has_header('Etag')
 
 
 def test_service_view_float(rf, settings):
@@ -83,12 +99,13 @@ def test_service_view_float(rf, settings):
     ])
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
-    result = view.dispatch(request, service='val')
+    view = views.HealthCheckServiceView.as_view()
+    result = view(request, service='val')
 
     assert result.status_code == 200
     assert result['Content-Type'] == 'application/json'
     assert result.content == b'1.5'
+    assert result.has_header('Etag')
 
 
 def test_service_view_remote(rf, settings):
@@ -102,8 +119,8 @@ def test_service_view_remote(rf, settings):
             json={"cache_default": True})
 
         request = rf.get('/')
-        view = views.HealthCheckServiceView()
-        result = view.dispatch(request, service='remote_service')
+        view = views.HealthCheckServiceView.as_view()
+        result = view(request, service='remote_service')
 
     expected = {'cache_default': True}
     data = json.loads(result.content.decode(result.charset))
@@ -111,6 +128,7 @@ def test_service_view_remote(rf, settings):
     assert result.status_code == 200
     assert result['Content-Type'] == 'application/json'
     assert data == expected
+    assert result.has_header('Etag')
 
 
 def test_service_view_err(rf, settings):
@@ -119,11 +137,16 @@ def test_service_view_err(rf, settings):
     }
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
+    view = views.HealthCheckServiceView.as_view()
 
-    result = view.dispatch(request, service='database')
+    result = view(request, service='database')
     assert result.status_code == 200
     assert result.content == b'false'
+    assert result.has_header('Etag')
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request, service='database')
+    assert result.status_code == 304
 
 
 def test_service_view_err_custom_code(rf, settings):
@@ -133,19 +156,23 @@ def test_service_view_err_custom_code(rf, settings):
     }
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
+    view = views.HealthCheckServiceView.as_view()
 
-    result = view.dispatch(request, service='database')
+    result = view(request, service='database')
     assert result.status_code == 500
     assert result.content == b'false'
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request, service='database')
+    assert result.status_code == 500
 
 
 def test_service_view_404(rf):
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
+    view = views.HealthCheckServiceView.as_view()
 
     with pytest.raises(Http404):
-        view.dispatch(request, service='database')
+        view(request, service='database')
 
 
 def test_service_require_auth(rf, settings):
@@ -157,7 +184,14 @@ def test_service_require_auth(rf, settings):
     }
 
     request = rf.get('/')
-    view = views.HealthCheckServiceView()
+    view = views.HealthCheckServiceView.as_view()
 
-    result = view.dispatch(request, service='database')
+    result = view(request, service='database')
     assert result.status_code == 401
+    assert result.has_header('Etag')
+
+    request = rf.get('/', HTTP_IF_NONE_MATCH=result['ETag'])
+    result = view(request, service='database')
+    assert result.status_code == 401
+    assert result.has_header('Etag')
+
