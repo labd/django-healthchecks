@@ -41,7 +41,7 @@ def create_service_result(service, request=None):
 def _get_check_functions(name=None, request=None):
     checks = _get_registered_health_checks()
     if not checks or (name and name not in checks):
-        raise StopIteration()
+        return
 
     checks = _filter_checks_on_permission(request, checks)
     if not checks or (name and name not in checks):
