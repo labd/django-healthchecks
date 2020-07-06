@@ -26,3 +26,10 @@ def test_check_cache_default_down(settings):
         }
     }
     assert not contrib.check_cache_default()
+
+
+@pytest.mark.django_db
+def test_check_heartbeats():
+    assert not contrib.MIGRATION_CACHE
+    assert contrib.check_open_migrations()
+    assert contrib.MIGRATION_CACHE
