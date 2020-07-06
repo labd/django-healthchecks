@@ -4,7 +4,7 @@ import inspect
 
 import requests
 from django.conf import settings
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.module_loading import import_string
 
 
@@ -58,7 +58,7 @@ def _get_check_functions(name=None, request=None):
         else:
             check_func = import_string(func_string)
 
-        spec = inspect.getargspec(check_func)
+        spec = inspect.getfullargspec(check_func)
         if spec.args == ['request']:
             check_func = functools.partial(check_func, request)
 
@@ -111,6 +111,6 @@ def _get_basic_auth(request):
         return
 
     auth = auth.split()
-    if len(auth) == 2 and force_text(auth[0]).lower() == u'basic':
+    if len(auth) == 2 and force_str(auth[0]).lower() == u'basic':
         credentials = base64.b64decode(auth[1]).decode('latin-1')
         return tuple(credentials.split(':'))
