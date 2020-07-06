@@ -5,17 +5,17 @@ docs_require = [
 ]
 
 tests_require = [
-    'coverage==4.5.1',
-    'pytest==3.0.5',
-    'pytest-django==3.1.2',
-    'requests-mock==1.4.0',
-    'freezegun==0.3.10',
+    'coverage==5.2',
+    'pytest==5.4.3',
+    'pytest-django==3.9.0',
+    'requests-mock==1.8.0',
+    'freezegun==0.3.15',
 
     # Linting
     'isort==4.2.5',
-    'flake8==3.0.3',
+    'flake8==3.8.3',
     'flake8-blind-except==0.1.1',
-    'flake8-debugger==1.4.0',
+    'flake8-debugger==3.2.1',
 ]
 
 setup(
@@ -27,9 +27,10 @@ setup(
     author="Michael van Tellingen",
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
-        'Django>=1.10',
-        'six>=1.1',
-        'requests>=2.18.4',
+        'Django>=2.2',
+        'six>=1.15.0',
+        'requests>=2.24.0',
+        'certifi>=2020.6.20',
     ],
     tests_require=tests_require,
     extras_require={
@@ -46,17 +47,14 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.10',
-        'Framework :: Django :: 1.11',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.2',
+        'Framework :: Django :: 3.0',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     zip_safe=False,
 )
