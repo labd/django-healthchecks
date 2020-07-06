@@ -140,6 +140,35 @@ def test_service_view_err_custom_code(rf, settings):
     assert result.content == b'false'
 
 
+def test_service_view_err_custom_code_header(rf, settings):
+    settings.HEALTH_CHECKS_ERROR_CODE = 200
+    settings.HEALTH_CHECKS = {
+        'database': 'django_healthchecks.contrib.check_dummy_false'
+    }
+
+    request = rf.get('/', HTTP_X_HEALTHCHECK_ERROR_CODE=500)
+    view = views.HealthCheckServiceView()
+
+    result = view.dispatch(request, service='database')
+    assert result.status_code == 500
+    assert result.content == b'false'
+
+
+def test_service_view_err_custom_code_header_override(rf, settings):
+    settings.HEALTH_CHECKS_ERROR_CODE = 200
+    settings.HEALTH_CHECKS_ERROR_CODE_HEADER = "X-ERROR-CODE"
+    settings.HEALTH_CHECKS = {
+        'database': 'django_healthchecks.contrib.check_dummy_false'
+    }
+
+    request = rf.get('/', HTTP_X_ERROR_CODE=500)
+    view = views.HealthCheckServiceView()
+
+    result = view.dispatch(request, service='database')
+    assert result.status_code == 500
+    assert result.content == b'false'
+
+
 def test_service_view_404(rf):
     request = rf.get('/')
     view = views.HealthCheckServiceView()
