@@ -3,7 +3,6 @@ from datetime import timedelta
 from django.conf import settings
 from django.db import models
 from django.db.models import ExpressionWrapper, F
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
@@ -49,7 +48,6 @@ class HeartbeatMonitorQuerySet(models.QuerySet):
         }
 
 
-@python_2_unicode_compatible
 class HeartbeatMonitor(models.Model):
     """Monitoring the heartbeat of a task
 
