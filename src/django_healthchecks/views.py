@@ -19,7 +19,25 @@ class NoCacheMixin(object):
             private=True, no_cache=True, no_store=True, max_age=0)(view)
 
 
-class HealthCheckView(NoCacheMixin, View):
+class GetErrorStatusCodeMixin(object):
+    status_header = getattr(settings, 'HEALTH_CHECKS_ERROR_CODE_HEADER', "X-HEALTHCHECK-ERROR-CODE")
+
+    def get_error_stats_code(self, request):
+        # override status code based on header but only allow int and within 100-599 range
+        if self.status_header in request.headers and request.headers[self.status_header]:
+            try:
+                status_code = int(request.headers[self.status_header])
+                # validate status code can be used
+                if 100 <= status_code <= 599:
+                    return status_code
+            except:
+                pass
+
+        # current default behaviour
+        return getattr(settings, 'HEALTH_CHECKS_ERROR_CODE', 200)
+
+
+class HealthCheckView(NoCacheMixin, GetErrorStatusCodeMixin, View):
 
     def get(self, request, *args, **kwargs):
         try:
@@ -28,11 +46,11 @@ class HealthCheckView(NoCacheMixin, View):
             response = HttpResponse(status=401)
             response['WWW-Authenticate'] = 'Basic realm="Healthchecks"'
             return response
-        status_code = 200 if is_healthy else _get_err_status_code()
+        status_code = 200 if is_healthy else self.get_error_stats_code(request)
         return JsonResponse(report, status=status_code)
 
 
-class HealthCheckServiceView(NoCacheMixin, View):
+class HealthCheckServiceView(NoCacheMixin, GetErrorStatusCodeMixin, View):
 
     def get(self, request, service, *args, **kwargs):
         service_path = list(filter(lambda s: s, service.split('/')))
@@ -45,9 +63,9 @@ class HealthCheckServiceView(NoCacheMixin, View):
             response['WWW-Authenticate'] = 'Basic realm="Healthchecks"'
             return response
 
-        return self.create_result_response(service, result, service_path)
+        return self.create_result_response(request,service, result, service_path)
 
-    def create_result_response(self, service, result, service_path):
+    def create_result_response(self, request, service, result, service_path):
         for nested in service_path:
             result = result.get(nested, None)
             if result is None:
@@ -57,14 +75,10 @@ class HealthCheckServiceView(NoCacheMixin, View):
             raise Http404()
 
         if result in (True, False):
-            status_code = 200 if result else _get_err_status_code()
+            status_code = 200 if result else self.get_error_stats_code(request)
             return HttpResponse(str(result).lower(), status=status_code)
         elif isinstance(result, six.string_types) or isinstance(result, bytes):
             return HttpResponse(result)
         else:
             # Django requires safe=False for non-dict values.
             return JsonResponse(result, safe=False)
-
-
-def _get_err_status_code():
-    return getattr(settings, 'HEALTH_CHECKS_ERROR_CODE', 200)
