@@ -3,6 +3,8 @@ import uuid
 from django.core.cache import cache
 from django.db import connection
 
+MIGRATION_CACHE = False
+
 
 def check_database():
     """Check if the application can perform a dummy sql query"""
@@ -46,3 +48,31 @@ def check_heartbeats():
     """Give a dict of each check and it's status."""
     from django_healthchecks.heartbeats import get_heartbeat_statuses
     return get_heartbeat_statuses() or None
+
+
+def check_open_migrations():
+    """
+    Check if all migrations have run.
+
+    Cache this check on succesfull run as to reduce disk io.
+    """
+    global MIGRATION_CACHE
+    if MIGRATION_CACHE:
+        return True
+
+    from django.db.migrations.executor import MigrationExecutor
+    from django.conf import ImproperlyConfigured
+
+    try:
+        executor = MigrationExecutor(connection)
+    except ImproperlyConfigured:
+        # No databases are configured (or the dummy one)
+        return None
+
+    plan = executor.migration_plan(executor.loader.graph.leaf_nodes())
+    if plan:
+        return False
+
+    if not MIGRATION_CACHE:
+        MIGRATION_CACHE = True
+    return MIGRATION_CACHE
