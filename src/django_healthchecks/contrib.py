@@ -30,7 +30,7 @@ def check_dummy_true():
     return True
 
 
-def check_dummy_false(request):
+def check_dummy_false():
     return False
 
 
