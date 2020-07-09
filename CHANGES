@@ -2,6 +2,13 @@
 ==================
  - This version now only supports Python 3.5+ and Django > 2.2, although earlier
    versions might still work.
+ - Implemented heartbeat support. With this healthcheck you can write add
+   'last active' flag to the database which is then used by a healthcheck
+   endpoint to see if it was updated recently. This is for example really
+   useful for background tasks (e.g. celery)
+ - Allow passing in the a custom status code for errors via an HTTP header, by
+   default 'X-HEALTHCHECK-ERROR-CODE'. This is helpful for kubernetes
+   healthchecks which can only act on http status codes.
 
 
 1.4.2 (2018-03-08)
