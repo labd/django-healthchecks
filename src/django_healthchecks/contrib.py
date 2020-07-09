@@ -62,8 +62,8 @@ def check_open_migrations():
     if MIGRATION_CACHE:
         return True
 
-    from django.db.migrations.executor import MigrationExecutor
     from django.conf import ImproperlyConfigured
+    from django.db.migrations.executor import MigrationExecutor
 
     try:
         executor = MigrationExecutor(connection)

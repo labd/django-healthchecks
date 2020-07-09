@@ -5,7 +5,7 @@ install:
 	pip install -e .[docs,test]
 
 format:
-	isort --recursive src tests
+	isort src tests
 	black src/ tests/
 
 test:
