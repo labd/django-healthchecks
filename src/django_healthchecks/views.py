@@ -23,17 +23,23 @@ class NoCacheMixin(object):
 
 class GetErrorStatusCodeMixin(object):
     def get_error_stats_code(self, request):
-        # override status code based on header but only allow int and within 100-599 range
+        """override status code based on header but only allow int and within
+        100-599 range.
+
+        """
         status_header = getattr(
             settings, "HEALTH_CHECKS_ERROR_CODE_HEADER", "X-HEALTHCHECK-ERROR-CODE"
         )
-        if status_header in request.headers and request.headers[status_header]:
+
+        requested_status_code = request.headers.get(status_header)
+        if requested_status_code:
             try:
-                status_code = int(request.headers[status_header])
                 # validate status code can be used
+                status_code = int(requested_status_code)
                 if 100 <= status_code <= 599:
                     return status_code
-            except:
+
+            except (TypeError, ValueError):
                 pass
 
         # current default behaviour
