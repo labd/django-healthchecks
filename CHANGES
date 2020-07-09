@@ -1,72 +1,103 @@
-1.4.0
-=====
+2.0.0 (unreleased)
+==================
+ - This version now only supports Python 3.5+ and Django > 2.2, although earlier
+   versions might still work.
+
+
+1.4.2 (2018-03-08)
+==================
+ - Fix bumpversion error
+
+
+1.4.1 (2018-03-08)
+==================
+ - Fix returning non-bool data from the HealthCheckServiceView
+
+
+1.4.0 (2018-03-08)
+==================
  - Add support for nested remote healthchecks (#10)
 
-1.3.0
-=====
+
+1.3.0 (2018-02-14)
+==================
  - Add Django 2.0 support (#9)
  - Correctly close the db cursor (#6)
 
-1.2.0
-=====
+
+1.2.0 (2018-01-30)
+==================
  - Wrap the basic auth header value in force_text()
 
-1.1.0
-=====
+
+1.1.0 (2016-10-09)
+==================
  - Fix healthcheck detail view page (#4)
 
-1.0.0
-=====
+
+1.0.0 (2016-08-13)
+==================
  - 1.0.0 release (including docs)
 
-0.7.1
-=====
+
+0.7.1 (2016-04-02)
+==================
  - Minor release to fix readme on pypi
 
-0.7.0
-=====
+
+0.7.0 (2016-04-01)
+==================
  - Introduce the `HEALTH_CHECKS_BASIC_AUTH` setting. This allows setting
    authentication for specific (or all) healthcheck endpoints
 
-0.6.0
-=====
- - Optionally allow checks to receive the request. This allows the remote_addr 
+
+0.6.0 (2016-02-02)
+==================
+ - Optionally allow checks to receive the request. This allows the remote_addr
    check which allows you to check if the proxy / x-forwarded-for is correctly
    set.
 
-0.5.0
-=====
+
+0.5.0 (2016-01-16)
+==================
  - Allow setting a HTTP status code for failures (`HEALTH_CHECKS_ERROR_CODE`)
 
-0.4.1
-=====
+
+0.4.1 (2015-11-24)
+==================
  - Make the wheel file universal (py2/py3)
 
-0.4.0
-=====
+0.4.0 (2015-11-24)
+==================
  - Add support for Python 3.4 and Python 3.5 (Arthur Skowronek)
 
-0.3.1
-=====
+
+0.3.1 (2015-11-12)
+==================
  - Release 0.3.0 was broken (didn't test..), add unittests and fix issue
 
-0.3.0 
-=====
+
+0.3.0 (2015-11-12)
+==================
  - Add simple cache checker in contrib
 
-0.2.0 
-=====
+
+0.2.0 (2015-08-05)
+==================
  - Set proper caching headers (no-cache, no-store, max-age=0)
 
-0.1.2
-=====
- - Return raw status value instead of forcing it to a boolean on the 
+
+0.1.2 (2015-07-13)
+==================
+ - Return raw status value instead of forcing it to a boolean on the
    detail page.
 
-0.1.1
-=====
+
+0.1.1 (2015-05-12)
+==================
  - Use status code 200 instead of 500 for failing checks
 
-0.1.0
-=====
+
+0.1.0 (2015-03-10)
+==================
  - Initial release
