@@ -1,7 +1,7 @@
 import pytest
+from django.core import cache
 
 from django_healthchecks import contrib
-from django.core import cache
 
 
 @pytest.mark.django_db
@@ -20,10 +20,8 @@ def test_check_cache_default_down(settings):
 
     """
     cache.caches = cache.CacheHandler()
-    settings.CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
+    settings.CACHES = {
+        "default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}
     }
     assert not contrib.check_cache_default()
 

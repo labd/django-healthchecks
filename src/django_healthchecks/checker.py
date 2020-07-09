@@ -53,20 +53,20 @@ def _get_check_functions(name=None, request=None):
 
         if callable(func_string):
             check_func = func_string
-        elif func_string.startswith(('https://', 'http://')):
+        elif func_string.startswith(("https://", "http://")):
             check_func = _http_healthcheck_func(func_string)
         else:
             check_func = import_string(func_string)
 
         spec = inspect.getfullargspec(check_func)
-        if spec.args == ['request']:
+        if spec.args == ["request"]:
             check_func = functools.partial(check_func, request)
 
         yield service, check_func
 
 
 def _get_registered_health_checks():
-    return getattr(settings, 'HEALTH_CHECKS', {})
+    return getattr(settings, "HEALTH_CHECKS", {})
 
 
 def _http_healthcheck_func(url):
@@ -84,17 +84,17 @@ def _http_healthcheck_func(url):
 
 
 def _get_http_healthcheck_timeout():
-    return getattr(settings, 'HEALTH_CHECKS_HTTP_TIMEOUT', 0.5)
+    return getattr(settings, "HEALTH_CHECKS_HTTP_TIMEOUT", 0.5)
 
 
 def _filter_checks_on_permission(request, checks):
-    permissions = getattr(settings, 'HEALTH_CHECKS_BASIC_AUTH', {})
+    permissions = getattr(settings, "HEALTH_CHECKS_BASIC_AUTH", {})
     if not permissions:
         return checks
 
     allowed = {}
     for name in checks.keys():
-        required_credentials = permissions.get(name, permissions.get('*'))
+        required_credentials = permissions.get(name, permissions.get("*"))
 
         if required_credentials:
             credentials = _get_basic_auth(request)
@@ -106,11 +106,11 @@ def _filter_checks_on_permission(request, checks):
 
 
 def _get_basic_auth(request):
-    auth = request.META.get('HTTP_AUTHORIZATION')
+    auth = request.META.get("HTTP_AUTHORIZATION")
     if not auth:
         return
 
     auth = auth.split()
-    if len(auth) == 2 and force_str(auth[0]).lower() == u'basic':
-        credentials = base64.b64decode(auth[1]).decode('latin-1')
-        return tuple(credentials.split(':'))
+    if len(auth) == 2 and force_str(auth[0]).lower() == u"basic":
+        credentials = base64.b64decode(auth[1]).decode("latin-1")
+        return tuple(credentials.split(":"))

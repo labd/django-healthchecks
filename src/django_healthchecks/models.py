@@ -11,7 +11,9 @@ IS_EXPIRED_COLUMN_TYPE = models.BooleanField()
 
 
 def _get_default_timeout():
-    return getattr(settings, "HEALTHCHECKS_DEFAULT_HEARTBEAT_TIMEOUT", timedelta(days=1))
+    return getattr(
+        settings, "HEALTHCHECKS_DEFAULT_HEARTBEAT_TIMEOUT", timedelta(days=1)
+    )
 
 
 class HeartbeatMonitorQuerySet(models.QuerySet):
@@ -23,8 +25,7 @@ class HeartbeatMonitorQuerySet(models.QuerySet):
         """Add an ``expires_at`` field to the queryset results."""
         return self.annotate(
             expires_at=ExpressionWrapper(
-                (F('last_beat') + F('timeout')),
-                output_field=EXPIRES_COLUMN_TYPE
+                (F("last_beat") + F("timeout")), output_field=EXPIRES_COLUMN_TYPE
             )
         )
 
@@ -34,7 +35,7 @@ class HeartbeatMonitorQuerySet(models.QuerySet):
 
     def expired_names(self):
         """Return a list of all heartbeats names that are expired."""
-        return list(self.expired().values_list('name', flat=True))
+        return list(self.expired().values_list("name", flat=True))
 
     def status_by_name(self):
         """Return the expired status for every heartbeat."""
@@ -42,10 +43,8 @@ class HeartbeatMonitorQuerySet(models.QuerySet):
         # Even this fails: .annotate(is_expired=RawSQL("(last_beat + timeout) < %s", [now()]))
         # Thus, have to make the comparison in Python instead.
         t = now()
-        monitors = self.annotate_expires_at().values_list('name', 'expires_at')
-        return {
-            name: (expires_at < t) for name, expires_at in monitors
-        }
+        monitors = self.annotate_expires_at().values_list("name", "expires_at")
+        return {name: (expires_at < t) for name, expires_at in monitors}
 
 
 class HeartbeatMonitor(models.Model):
@@ -54,6 +53,7 @@ class HeartbeatMonitor(models.Model):
     When a service is no longer sending out heartbeats, the
     ``check_expired_heartbeats`` check will be triggered.
     """
+
     name = models.CharField(_("Name"), max_length=200, db_index=True, unique=True)
     enabled = models.BooleanField(_("Enabled"), db_index=True, default=True)
     timeout = models.DurationField(_("Timeout"))
@@ -65,7 +65,7 @@ class HeartbeatMonitor(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ("name",)
         verbose_name = _("Heartbeat Monitor")
         verbose_name_plural = _("Heartbeat Monitors")
 
@@ -90,7 +90,7 @@ class HeartbeatMonitor(models.Model):
         """
         extra_updates = {}
         if timeout is not None:
-            extra_updates['timeout'] = timeout
+            extra_updates["timeout"] = timeout
 
         rows = cls.objects.filter(name=name).update(last_beat=now(), **extra_updates)
         if not rows:

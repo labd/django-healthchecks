@@ -18,8 +18,7 @@ ONE_HOUR_LATER = datetime(2018, 5, 3, 13, 1, 0, tzinfo=utc)
 def beat1():
     # Should be expired one hour later
     return HeartbeatMonitor.objects.create(
-        name='testing.beat1', enabled=True,
-        timeout=timedelta(hours=1), last_beat=NOON
+        name="testing.beat1", enabled=True, timeout=timedelta(hours=1), last_beat=NOON
     )
 
 
@@ -28,8 +27,10 @@ def beat1():
 def beat2():
     # Should not be expired one hour later
     return HeartbeatMonitor.objects.create(
-        name='testing.beat2', enabled=True,
-        timeout=timedelta(hours=1, minutes=8), last_beat=NOON
+        name="testing.beat2",
+        enabled=True,
+        timeout=timedelta(hours=1, minutes=8),
+        last_beat=NOON,
     )
 
 
@@ -38,8 +39,10 @@ def beat2():
 def beat3():
     # Should be ignored in all tests
     return HeartbeatMonitor.objects.create(
-        name='testing.beat3', enabled=False,
-        timeout=timedelta(minutes=1), last_beat=NOON
+        name="testing.beat3",
+        enabled=False,
+        timeout=timedelta(minutes=1),
+        last_beat=NOON,
     )
 
 
@@ -47,26 +50,29 @@ def beat3():
 def test_check_empty_db():
     """See that an empty database doesn't crash."""
     assert check_expired_heartbeats() is None
-    assert check_heartbeats() == {'__all__': True}
+    assert check_heartbeats() == {"__all__": True}
 
 
 @pytest.mark.django_db
 @freeze_time(ONE_HOUR_LATER)
 def test_check_expired(beat1, beat2, beat3):
     """See that the checks themselves return proper data."""
-    assert check_expired_heartbeats() == ['testing.beat1']
+    assert check_expired_heartbeats() == ["testing.beat1"]
     assert check_heartbeats() == {
-        '__all__': False,
-        'testing.beat1': True,
-        'testing.beat2': False,
+        "__all__": False,
+        "testing.beat1": True,
+        "testing.beat2": False,
     }
 
 
 @pytest.mark.django_db
 @freeze_time(ONE_HOUR_LATER)
 def test_expired_names(beat1, beat2, beat3):
-    assert HeartbeatMonitor.objects.expired_names() == ['testing.beat1', 'testing.beat3']
-    assert HeartbeatMonitor.objects.enabled().expired_names() == ['testing.beat1']
+    assert HeartbeatMonitor.objects.expired_names() == [
+        "testing.beat1",
+        "testing.beat3",
+    ]
+    assert HeartbeatMonitor.objects.enabled().expired_names() == ["testing.beat1"]
 
 
 @pytest.mark.django_db
@@ -167,19 +173,21 @@ def test_admin_list_view(admin_client, beat1, beat2, beat3):
     By adding ?o=1.2.3.4 the ordering of all columns is tested too.
     This makes sure the 'admin_order_field' also works.
     """
-    url = reverse('admin:django_healthchecks_heartbeatmonitor_changelist') + "?o=1.2.3.4"
+    url = (
+        reverse("admin:django_healthchecks_heartbeatmonitor_changelist") + "?o=1.2.3.4"
+    )
     response = admin_client.get(url)
     assert response.status_code == 200
     content = response.render().content  # make sure template rendering works
-    assert b'icon-alert.svg' in content
+    assert b"icon-alert.svg" in content
 
 
 @pytest.mark.django_db
 @freeze_time(ONE_HOUR_LATER)
 def test_admin_change_view(admin_client, beat1):
     """See that the admin page renders without fieldset issues."""
-    url = reverse('admin:django_healthchecks_heartbeatmonitor_change', args=(beat1.pk,))
+    url = reverse("admin:django_healthchecks_heartbeatmonitor_change", args=(beat1.pk,))
     response = admin_client.get(url)
     assert response.status_code == 200
     content = response.render().content  # make sure template rendering works
-    assert b'icon-alert.svg' in content
+    assert b"icon-alert.svg" in content

@@ -25,7 +25,7 @@ def get_heartbeat_statuses():
     :rtype: dict
     """
     data = HeartbeatMonitor.objects.enabled().status_by_name()
-    data['__all__'] = all(data.values())
+    data["__all__"] = all(data.values())
     return data
 
 
@@ -44,7 +44,9 @@ def update_heartbeat(name, default_timeout=None, timeout=None):
     :param timeout: The timeout to be forcefully updated.
     :type timeout: datetime.timedelta
     """
-    HeartbeatMonitor._update(name=name, default_timeout=default_timeout, timeout=timeout)
+    HeartbeatMonitor._update(
+        name=name, default_timeout=default_timeout, timeout=timeout
+    )
 
 
 def update_heartbeat_on_success(name, default_timeout=None, timeout=None):

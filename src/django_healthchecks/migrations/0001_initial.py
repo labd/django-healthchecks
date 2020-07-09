@@ -9,23 +9,43 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='HeartbeatMonitor',
+            name="HeartbeatMonitor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(db_index=True, max_length=200, unique=True, verbose_name='Name')),
-                ('enabled', models.BooleanField(db_index=True, default=True, verbose_name='Enabled')),
-                ('timeout', models.DurationField(verbose_name='Timeout')),
-                ('last_beat', models.DateTimeField(null=True, verbose_name='Last Beat')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        db_index=True, max_length=200, unique=True, verbose_name="Name"
+                    ),
+                ),
+                (
+                    "enabled",
+                    models.BooleanField(
+                        db_index=True, default=True, verbose_name="Enabled"
+                    ),
+                ),
+                ("timeout", models.DurationField(verbose_name="Timeout")),
+                (
+                    "last_beat",
+                    models.DateTimeField(null=True, verbose_name="Last Beat"),
+                ),
             ],
             options={
-                'verbose_name': 'Heartbeat Monitor',
-                'verbose_name_plural': 'Heartbeat Monitors',
-                'ordering': ('name',),
+                "verbose_name": "Heartbeat Monitor",
+                "verbose_name_plural": "Heartbeat Monitors",
+                "ordering": ("name",),
             },
         ),
     ]
