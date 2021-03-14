@@ -21,7 +21,9 @@ def test_check_cache_default_down(settings):
     """
     cache.caches = cache.CacheHandler()
     settings.CACHES = {
-        "default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache",}
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
     }
     assert not contrib.check_cache_default()
 
