@@ -27,7 +27,6 @@ setup(
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
         "Django>=2.2",
-        "six>=1.15.0",
         "requests>=2.24.0",
         "certifi>=2020.6.20",
     ],
