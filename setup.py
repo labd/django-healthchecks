@@ -6,12 +6,12 @@ docs_require = [
 
 tests_require = [
     "coverage[toml]==5.2",
-    "pytest==5.4.3",
-    "pytest-django==3.9.0",
-    "requests-mock==1.8.0",
-    "freezegun==0.3.15",
+    "pytest==7.0.1",
+    "pytest-django==4.5.2",
+    "requests-mock==1.9.3",
+    "freezegun==1.2.1",
     # Linting
-    "isort==5.0.6",
+    "isort==5.10.1",
     "flake8==3.8.3",
     "flake8-blind-except==0.1.1",
     "flake8-debugger==3.2.1",
