@@ -52,7 +52,9 @@ def test_service_view_bool(rf, settings):
 def test_service_view_bytes(rf, settings):
     # This tests the serilization contraints
     settings.HEALTH_CHECKS = OrderedDict(
-        [("ip", "django_healthchecks.contrib.check_remote_addr"),]
+        [
+            ("ip", "django_healthchecks.contrib.check_remote_addr"),
+        ]
     )
 
     request = rf.get("/")
@@ -65,7 +67,11 @@ def test_service_view_bytes(rf, settings):
 
 def test_service_view_int(rf, settings):
     # This tests the serilization contraints
-    settings.HEALTH_CHECKS = OrderedDict([("val", check_int),])
+    settings.HEALTH_CHECKS = OrderedDict(
+        [
+            ("val", check_int),
+        ]
+    )
 
     request = rf.get("/")
     view = views.HealthCheckServiceView()
@@ -78,7 +84,11 @@ def test_service_view_int(rf, settings):
 
 def test_service_view_float(rf, settings):
     # This tests the serilization contraints
-    settings.HEALTH_CHECKS = OrderedDict([("val", check_float),])
+    settings.HEALTH_CHECKS = OrderedDict(
+        [
+            ("val", check_float),
+        ]
+    )
 
     request = rf.get("/")
     view = views.HealthCheckServiceView()

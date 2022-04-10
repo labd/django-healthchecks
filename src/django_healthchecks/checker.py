@@ -111,6 +111,6 @@ def _get_basic_auth(request):
         return
 
     auth = auth.split()
-    if len(auth) == 2 and force_str(auth[0]).lower() == u"basic":
+    if len(auth) == 2 and force_str(auth[0]).lower() == "basic":
         credentials = base64.b64decode(auth[1]).decode("latin-1")
         return tuple(credentials.split(":"))

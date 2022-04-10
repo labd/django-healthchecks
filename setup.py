@@ -6,12 +6,12 @@ docs_require = [
 
 tests_require = [
     "coverage[toml]==5.2",
-    "pytest==5.4.3",
-    "pytest-django==3.9.0",
-    "requests-mock==1.8.0",
-    "freezegun==0.3.15",
+    "pytest==7.0.1",
+    "pytest-django==4.5.2",
+    "requests-mock==1.9.3",
+    "freezegun==1.2.1",
     # Linting
-    "isort==5.0.6",
+    "isort==5.10.1",
     "flake8==3.8.3",
     "flake8-blind-except==0.1.1",
     "flake8-debugger==3.2.1",
@@ -27,7 +27,6 @@ setup(
     author_email="michaelvantellingen@gmail.com",
     install_requires=[
         "Django>=2.2",
-        "six>=1.15.0",
         "requests>=2.24.0",
         "certifi>=2020.6.20",
     ],
@@ -45,12 +44,16 @@ setup(
         "Framework :: Django",
         "Framework :: Django :: 2.2",
         "Framework :: Django :: 3.0",
+        "Framework :: Django :: 3.1",
+        "Framework :: Django :: 3.2",
+        "Framework :: Django :: 4.0",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     zip_safe=False,
 )

@@ -19,7 +19,10 @@ def pytest_configure():
             }
         },
         DATABASES={
-            "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite",},
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": "db.sqlite",
+            },
         },
         MIDDLEWARE=(
             "django.contrib.sessions.middleware.SessionMiddleware",
@@ -33,6 +36,7 @@ def pytest_configure():
                 },
             },
         ],
+        SECRET_KEY="django-insecure-2%2hup1&(r-6(88=)txivii25r^o%4-&00u5vgs#n93r#t8+y0",
         USE_TZ=True,
         ROOT_URLCONF="test_urls",
     )

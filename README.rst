@@ -38,7 +38,7 @@ Add the following to your urls.py:
 
 .. code-block:: python
 
-    url(r'^healthchecks/', include('django_healthchecks.urls')),
+    path('healthchecks/', include('django_healthchecks.urls')),
 
 
 Add a setting with the available healthchecks:
