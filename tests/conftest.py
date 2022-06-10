@@ -3,6 +3,7 @@ from django.conf import settings
 
 def pytest_configure():
     settings.configure(
+        SECRET_KEY="KZ6ae1ZfI0BL36beMzReajDLWLb5O8bw",
         HEALTH_CHECKS={},
         MIDDLEWARE_CLASSES=[],
         INSTALLED_APPS=[
