@@ -23,25 +23,19 @@ jobs:
       max-parallel: 4
       matrix:
         tox_env:
-            - py37-django32
             - py38-django32
             - py39-django32
             - py310-django32
-            - py37-django40
             - py38-django40
             - py39-django40
             - py310-django40
         include:
-            - python-version: "3.7"
-              tox_env: py37-django32
             - python-version: "3.8"
               tox_env: py38-django32
             - python-version: "3.9"
               tox_env: py39-django32
             - python-version: "3.10"
               tox_env: py310-django32
-            - python-version: "3.7"
-              tox_env: py37-django40
             - python-version: "3.8"
               tox_env: py38-django40
             - python-version: "3.9"
@@ -79,7 +73,7 @@ jobs:
     - name: Set up Python 3.10
       uses: actions/setup-python@v1
       with:
-        python-version: 3.10
+        python-version: "3.10"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
