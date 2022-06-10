@@ -10,7 +10,6 @@ def test_check_database():
 
 
 def test_check_cache_default():
-    cache.caches = cache.CacheHandler()
     assert contrib.check_cache_default()
 
 
@@ -19,7 +18,6 @@ def test_check_cache_default_down(settings):
     read/write some dummy data.
 
     """
-    cache.caches = cache.CacheHandler()
     settings.CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.dummy.DummyCache",
