@@ -6,7 +6,7 @@ docs_require = [
 
 tests_require = [
     "coverage[toml]==5.2",
-    "pytest==6.2.5",
+    "pytest==9.0.3",
     "pytest-django==3.9.0",
     "requests-mock==1.8.0",
     "freezegun==0.3.15",
