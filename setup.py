@@ -24,7 +24,7 @@ setup(
     author_email="michaelvantellingen@gmail.com",
     python_requires=">=3.11",
     install_requires=[
-        "Django>=3.2",
+        "Django>=4.2",
         "requests>=2.24.0",
         "certifi>=2020.6.20",
     ],
@@ -40,8 +40,6 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django",
-        "Framework :: Django :: 3.2",
-        "Framework :: Django :: 4.0",
         "Framework :: Django :: 4.2",
         "Framework :: Django :: 5.2",
         "License :: OSI Approved :: MIT License",
