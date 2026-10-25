@@ -16,9 +16,6 @@ Status
 .. image:: https://github.com/mvantellingen/django-healthchecks/workflows/Python%20Tests/badge.svg
     :target: https://github.com/mvantellingen/django-healthchecks/actions?query=workflow%3A%22Python+Tests%22
 
-.. image:: http://codecov.io/github/mvantellingen/django-healthchecks/coverage.svg?branch=master
-    :target: http://codecov.io/github/mvantellingen/django-healthchecks?branch=master
-
 .. image:: https://img.shields.io/pypi/v/django-healthchecks.svg
     :target: https://pypi.python.org/pypi/django-healthchecks/
 
