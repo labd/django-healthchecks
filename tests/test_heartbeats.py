@@ -1,16 +1,15 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from django.urls import reverse
-from django.utils.timezone import utc
 from freezegun import freeze_time
 
 from django_healthchecks.contrib import check_expired_heartbeats, check_heartbeats
 from django_healthchecks.heartbeats import update_heartbeat, update_heartbeat_on_success
 from django_healthchecks.models import HeartbeatMonitor
 
-NOON = datetime(2018, 5, 3, 12, 0, 0, tzinfo=utc)
-ONE_HOUR_LATER = datetime(2018, 5, 3, 13, 1, 0, tzinfo=utc)
+NOON = datetime(2018, 5, 3, 12, 0, 0, tzinfo=timezone.utc)
+ONE_HOUR_LATER = datetime(2018, 5, 3, 13, 1, 0, tzinfo=timezone.utc)
 
 
 @pytest.fixture

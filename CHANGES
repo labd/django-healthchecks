@@ -9,7 +9,8 @@
  - Allow passing in the a custom status code for errors via an HTTP header, by
    default 'X-HEALTHCHECK-ERROR-CODE'. This is helpful for kubernetes
    healthchecks which can only act on http status codes.
- - Require Python 3.10+ (drop Python 3.8 and 3.9). Bump test dependency
+ - Require Python 3.11+ (drop Python 3.8, 3.9 and 3.10). Test against Python
+   3.11-3.14 and Django 4.2 and 5.2. Bump test dependency
    pytest to 9.0.3 to resolve a security advisory.
 
 
