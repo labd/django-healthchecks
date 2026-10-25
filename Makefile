@@ -5,8 +5,8 @@ install:
 	pip install -e .[docs,test]
 
 format:
-	isort src tests
-	black src/ tests/
+	ruff format src tests
+	ruff check --fix src tests
 
 test:
 	py.test
