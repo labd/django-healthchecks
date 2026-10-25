@@ -11,10 +11,7 @@ tests_require = [
     "requests-mock==1.8.0",
     "freezegun==1.5.5",
     # Linting
-    "isort==5.0.6",
-    "flake8==3.8.3",
-    "flake8-blind-except==0.1.1",
-    "flake8-debugger==3.2.1",
+    "ruff",
 ]
 
 setup(
