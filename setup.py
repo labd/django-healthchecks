@@ -6,7 +6,7 @@ docs_require = [
 
 tests_require = [
     "coverage[toml]==5.2",
-    "pytest==6.2.5",
+    "pytest==9.0.3",
     "pytest-django==3.9.0",
     "requests-mock==1.8.0",
     "freezegun==0.3.15",
@@ -25,6 +25,7 @@ setup(
     url="https://github.com/mvantellingen/django-healthchecks",
     author="Michael van Tellingen",
     author_email="michaelvantellingen@gmail.com",
+    python_requires=">=3.10",
     install_requires=[
         "Django>=3.2",
         "requests>=2.24.0",
@@ -46,8 +47,6 @@ setup(
         "Framework :: Django :: 4.0",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
     zip_safe=False,
