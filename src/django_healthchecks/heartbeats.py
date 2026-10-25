@@ -4,9 +4,8 @@ This module exists to keep external code decoupled from our model-based
 implementation. This allows extending the functionality later to support
 different mechanisms for tracking heartbeats (e.g. external services).
 """
-from functools import wraps
 
-from django.utils.timezone import now
+from functools import wraps
 
 from django_healthchecks.models import HeartbeatMonitor
 

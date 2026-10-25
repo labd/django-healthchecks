@@ -1,5 +1,4 @@
 import pytest
-from django.core import cache
 
 from django_healthchecks import contrib
 
