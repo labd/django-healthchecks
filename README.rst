@@ -2,6 +2,12 @@
 django-healthchecks
 ===================
 
+.. image:: https://img.shields.io/pypi/v/django-healthchecks.svg
+    :target: https://pypi.org/project/django-healthchecks/
+
+.. image:: https://github.com/labd/django-healthchecks/actions/workflows/python-test.yml/badge.svg
+    :target: https://github.com/labd/django-healthchecks/actions/workflows/python-test.yml
+
 Simple Django app/framework to publish health check for monitoring purposes
 
 Features:
@@ -10,14 +16,6 @@ Features:
 * Remote healthchecks
 * Heartbeat monitoring
 
-
-Status
-======
-.. image:: https://github.com/mvantellingen/django-healthchecks/workflows/Python%20Tests/badge.svg
-    :target: https://github.com/mvantellingen/django-healthchecks/actions?query=workflow%3A%22Python+Tests%22
-
-.. image:: https://img.shields.io/pypi/v/django-healthchecks.svg
-    :target: https://pypi.python.org/pypi/django-healthchecks/
 
 Installation
 ============
