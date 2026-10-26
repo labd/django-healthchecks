@@ -411,7 +411,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "certifi", specifier = ">=2020.6.20" },
-    { name = "django", specifier = ">=4.2" },
+    { name = "django", specifier = ">=5.2" },
     { name = "requests", specifier = ">=2.24.0" },
 ]
 
