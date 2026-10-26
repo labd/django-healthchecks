@@ -30,7 +30,7 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/labd/django-healthchecks"
 Documentation = "https://django-healthchecks.readthedocs.io/"
-Changelog = "https://github.com/labd/django-healthchecks/blob/master/CHANGES"
+Changelog = "https://github.com/labd/django-healthchecks/blob/master/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
@@ -71,6 +71,7 @@ packages = ["src/django_healthchecks"]
 include = [
     "src/django_healthchecks",
     "tests",
+    "CHANGELOG.md",
     "CHANGES",
     "LICENSE",
     "README.rst",
