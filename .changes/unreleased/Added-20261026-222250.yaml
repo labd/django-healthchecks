@@ -1,3 +1,0 @@
-kind: Added
-body: Support Python 3.11 to 3.14 and Django 5.2 and 6.0. Python < 3.11 and Django < 5.2 are no longer supported.
-time: 2026-10-26T22:22:50.627674+01:00

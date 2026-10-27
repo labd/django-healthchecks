@@ -1,6 +1,6 @@
 [project]
 name = "django-healthchecks"
-version = "1.5.0"
+version = "1.6.0"
 description = "Simple Django app/framework to publish health checks"
 readme = "README.rst"
 license = "MIT"
