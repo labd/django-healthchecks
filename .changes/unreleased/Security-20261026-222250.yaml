@@ -1,3 +1,0 @@
-kind: Security
-body: Bump test dependency pytest to 9.0.3 to resolve a security advisory
-time: 2026-10-26T22:22:50.645601+01:00
